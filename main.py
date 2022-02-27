@@ -203,11 +203,26 @@ class MPLWidget(QWidget):
             if self.lineeditnode.text().isdigit() and int(self.lineeditnode.text()) <= 455:
                 list_select = flatten(
                     self.df_original.loc[self.df_original['comp_1'] == int(self.lineeditnode.text())].values)
-
-                self.canvas.select_nodes(list_select[1])
-                self.labelinfo.setText(gettextwithsearch(list_select))
-                self.labelinfo.show()
-            # требуется улучшения
+                if list_select:
+                    self.canvas.select_nodes(list_select[1])
+                    self.labelinfo.setText(gettextwithsearch(list_select))
+                    self.labelinfo.show()
+                else:
+                    self.labelinfo.setText("Это битый компонент!")
+                    self.labelinfo.show()
+            if self.lineeditnode.text().isdigit() and int(self.lineeditnode.text()) > 455:
+                res = int(self.lineeditnode.text()) % 455
+                list_select = flatten(
+                    self.df_original.loc[self.df_original['comp_1'] == res].values)
+                if list_select:
+                    list_b = flatten(
+                        self.df_original.loc[self.df_original['comp_1'] == int(self.lineeditnode.text())].values)
+                    self.canvas.select_nodes(list_select[1])
+                    self.labelinfo.setText(gettextwithsearch(list_b))
+                    self.labelinfo.show()
+                else:
+                    self.labelinfo.setText("Это битый компонент!")
+                    self.labelinfo.show()
 
 
 
